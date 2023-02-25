@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { instanceToPlain } from "class-transformer";
-import { AppDataSource } from "../../../index";
+import { AppDataSource } from "../../db";
 import { Task } from "../../entities/task.entity";
 
 export const getAllTasks = async (
