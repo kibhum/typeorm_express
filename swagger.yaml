@@ -127,7 +127,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/task"
+security:
+  - BasicAuth: []
+  - JwtAuthToken: []
 components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    JwtAuthToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     taskDescription:
       type: string
