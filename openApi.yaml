@@ -13,7 +13,32 @@ paths:
       responses:
         200:
           description: List of tasks
-    put:
-      responses:
-        200:
-          description: List of tasks
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/tasksList"
+components:
+  schemas:
+    taskDescription:
+      type: string
+      minLength: 2
+      maxLength: 100
+      example: to be perfectly clean
+    task:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          minLength: 2
+          maxLength: 100
+          example: cleaning
+        description:
+          $ref: "#/components/schemas/taskDescription"
+    tasksList:
+      type: array
+      description: list of tasks
+      items:
+        $ref: "#/components/schemas/task"
