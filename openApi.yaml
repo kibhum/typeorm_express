@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.2
 info:
   version: "1.0"
   title: todo api
@@ -10,6 +10,10 @@ servers:
 paths:
   /v1/tasks:
     get:
+      tags:
+        - Tasks
+      summary: List tasks
+      description: Get a list of tasks
       parameters:
         - name: pageNumber
           in: query
@@ -33,23 +37,66 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/tasksList"
-  /v1/tasks/{taskId}:
-    get:
-      parameters:
-        - name: taskId
-          in: path
-          description: Task Id
-          required: true
-          schema:
-            type: string
-            format: uuid
+    post:
+      tags:
+        - Tasks
+      summary: New Task
+      description: Create A New task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/task"
       responses:
-        200:
-          description: List of tasks
+        201:
+          description: Task created
+          headers:
+            location:
+              description: Location to do the task
+              schema:
+                type: string
+                format: uri
+                example: http://example.com/v1/tasks/{assignedValue}
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/tasksList"
+                $ref: "#/components/schemas/task"
+  /v1/tasks/{taskId}:
+    get:
+      tags:
+        - Tasks
+      summary: Task by id
+      description: Get a task by ud
+      parameters:
+        - $ref: "#/components/parameters/taskIdPathParam"
+      responses:
+        200:
+          description: Found Task
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/task"
+    put:
+      tags:
+        - Tasks
+      summary: Update a Task
+      description: Update task given an id
+      parameters:
+        - $ref: "#/components/parameters/taskIdPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/task"
+      responses:
+        200:
+          description: Updated Task
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/task"
 components:
   schemas:
     taskDescription:
@@ -63,6 +110,7 @@ components:
         id:
           type: string
           format: uuid
+          readOnly: true
         title:
           type: string
           minLength: 2
@@ -75,3 +123,13 @@ components:
       description: list of tasks
       items:
         $ref: "#/components/schemas/task"
+
+  parameters:
+    taskIdPathParam:
+      name: taskId
+      in: path
+      description: Task Id
+      required: true
+      schema:
+        type: string
+        format: uuid
