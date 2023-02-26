@@ -33,6 +33,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/tasksList"
+  /v1/tasks/{taskId}:
+    get:
+      parameters:
+        - name: taskId
+          in: path
+          description: Task Id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/tasksList"
 components:
   schemas:
     taskDescription:
