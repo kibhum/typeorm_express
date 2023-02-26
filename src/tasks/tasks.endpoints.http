@@ -1,3 +1,7 @@
 ### Fetch All Tasks
 GET http://localhost:3000/tasks
 Content-Type: application/json
+
+### Create Task
+POST http://localhost:3000/tasks
+Content-Type: application/json

@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllTasks } from "../controllers/task.controller";
+import { createTask, getAllTasks } from "../controllers/task.controller";
 // import { TaskController } from "../controllers/task.controller";
 
 export const taskRouter = express.Router();
@@ -16,3 +16,4 @@ export const taskRouter = express.Router();
 // });
 // const taskController = new TaskController();
 taskRouter.get("/tasks", getAllTasks);
+taskRouter.post("/tasks", createTask);
